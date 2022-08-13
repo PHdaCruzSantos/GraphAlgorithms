@@ -56,4 +56,45 @@ public class Graph {
     return count;
   }
 
+  public int highestDegree() {
+    int adjMatrixRange = this.adjMatrix.length;
+    int returnDegree;
+    int highest = 0;
+    for (int i = 0; i < adjMatrixRange; i++) {
+      returnDegree = degree(i);
+      if (returnDegree > highest) {
+        highest = returnDegree;
+      }
+    }
+    return highest;
+  }
+
+  public int lowestDegree() {
+    int adjMatrixRange = this.adjMatrix.length;
+    int returnDegree;
+    int lowest = adjMatrixRange;
+    for (int i = 0; i < adjMatrixRange; i++) {
+      returnDegree = this.degree(i);
+      if (returnDegree < lowest) {
+        lowest = returnDegree;
+      }
+    }
+    return lowest;
+  }
+
+  public Graph complement(){
+    //return the complement of the current graph 
+    Graph complementGraph = new Graph(this.adjMatrix.length);
+    for(int i = 0;  i < this.adjMatrix.length; i++){
+      for(int j = 0; j < this.adjMatrix[i].length; j++){
+        if(this.adjMatrix[i][j] == 0 && i != j)
+          complementGraph.addEdge(i,j,1);
+      }
+    }
+    
+    return complementGraph;
+  }
+
+
+  
 }
