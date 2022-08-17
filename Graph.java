@@ -82,19 +82,40 @@ public class Graph {
     return lowest;
   }
 
-  public Graph complement(){
-    //return the complement of the current graph 
+  public Graph complement() {
+    // return the complement of the current graph
     Graph complementGraph = new Graph(this.adjMatrix.length);
-    for(int i = 0;  i < this.adjMatrix.length; i++){
-      for(int j = 0; j < this.adjMatrix[i].length; j++){
-        if(this.adjMatrix[i][j] == 0 && i != j)
-          complementGraph.addEdge(i,j,1);
+    for (int i = 0; i < this.adjMatrix.length; i++) {
+      for (int j = 0; j < this.adjMatrix[i].length; j++) {
+        if (this.adjMatrix[i][j] == 0 && i != j)
+          complementGraph.addEdge(i, j, 1);
       }
     }
-    
     return complementGraph;
   }
 
+  public float density() {
+    // d = |e| / |v| * |v| -1
+    float d;
+    d = ((float) this.getCounEdges()) / (((float) (this.getCountNodes() * this.getCountNodes())) - 1.0f);
+    return d;
+  }
 
-  
+  public boolean subGraph(Graph g2) {
+    // return true if g2 is a subgraph of the current graph
+    boolean isSubGraph = false;
+    if (!(g2.getCountNodes() > this.getCountNodes())) {
+      for (int i = 0; i < this.adjMatrix.length; i++) {
+        for (int j = 0; j < this.adjMatrix[i].length; j++) {
+          if (this.adjMatrix[i][j] == 1 && g2.adjMatrix[i][j] == 1)
+            isSubGraph = true;
+        }
+      }
+    } else {
+      isSubGraph = false;
+      System.out.println("g2 cannot be greater than g1");
+    }
+    return isSubGraph;
+  }
+
 }
