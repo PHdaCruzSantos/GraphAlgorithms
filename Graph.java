@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Graph {
@@ -10,6 +14,29 @@ public class Graph {
     this.countNodes = numNodes;
     this.countEdges = 0;
     this.adjMatrix = new int[numNodes][numNodes];
+  }
+
+  public Graph(String fileName) throws IOException {
+    File file = new File(fileName);
+    FileReader reader = new FileReader(file);
+    BufferedReader bufferedReader = new BufferedReader(reader);
+
+    // Read header
+    String[] line = bufferedReader.readLine().split(" ");
+    this.countNodes = (Integer.parseInt(line[0]));
+    int fileLines = (Integer.parseInt(line[1]));
+
+    // Create and fill adjMatrix with read edges
+    this.adjMatrix = new int[this.countNodes][this.countNodes];
+    for (int i = 0; i < fileLines; ++i) {
+      String[] edgeInfo = bufferedReader.readLine().split(" ");
+      int source = Integer.parseInt(edgeInfo[0]);
+      int sink = Integer.parseInt(edgeInfo[1]);
+      int weight = Integer.parseInt(edgeInfo[2]);
+      addEdge(source, sink, weight);
+    }
+    bufferedReader.close();
+    reader.close();
   }
 
   public void addEdge(int source, int sink, int weight) {
@@ -160,13 +187,13 @@ public class Graph {
     return R;
   }
 
-  public void dfsRecAux(int u, int[] desc, ArrayList<Integer> R) {
+  // 's' and 'u' brother's
+  private void dfsRecAux(int u, int[] desc, ArrayList<Integer> R) {
     desc[u] = 1;
     R.add(u);
     for (int v = 0; v < this.adjMatrix[u].length; ++v) {
-      if (this.adjMatrix[u][v] != 0 && desc[v] == 0) {
-        dfsRecAux(v, desc, R);
-      }
+      if (this.adjMatrix[u][v] != 0 && desc[v] == 0)
+        dfsRecAux(v, desc, R);// walking next node
     }
   }
 

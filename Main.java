@@ -8,7 +8,9 @@ class Main {
     g1.addEdgeUnoriented(7, 0, 1);
     g1.addEdgeUnoriented(1, 2, 1);
     g1.addEdgeUnoriented(0, 5, 1);
-    System.out.println(g1.dfs(2));
+    System.out.println(g1.dfs(3));
+    System.out.println(g1.dfsRec(3));
+    // System.out.println(g1.dfsRecAux(3));
     // g1.addEdge(0, 1, 1);
     // g1.addEdge(1, 0, 1);
     // g1.addEdge(0, 3, 1);
