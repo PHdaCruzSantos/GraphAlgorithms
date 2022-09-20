@@ -1,15 +1,14 @@
 class Main {
   public static void main(String[] args) {
-    Graph g1 = new Graph(8);
-    g1.addEdgeUnoriented(6, 3, 1);
-    g1.addEdgeUnoriented(6, 7, 1);
-    g1.addEdgeUnoriented(6, 1, 1);
-    g1.addEdgeUnoriented(3, 4, 1);
-    g1.addEdgeUnoriented(7, 0, 1);
-    g1.addEdgeUnoriented(1, 2, 1);
-    g1.addEdgeUnoriented(0, 5, 1);
-    System.out.println(g1.dfs(3));
-    System.out.println(g1.dfsRec(3));
+    Graph g1 = new Graph(4);
+    g1.addEdge(0, 1, 1);
+    g1.addEdge(0, 2, 6);
+
+    g1.addEdge(1, 2, 4);
+
+    g1.addEdge(2, 1, 3);
+
+    g1.floydWarshall();
     // System.out.println(g1.dfsRecAux(3));
     // g1.addEdge(0, 1, 1);
     // g1.addEdge(1, 0, 1);

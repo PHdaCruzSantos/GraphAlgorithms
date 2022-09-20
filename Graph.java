@@ -2,7 +2,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.w3c.dom.Node;
 
 public class Graph {
 
@@ -195,6 +199,52 @@ public class Graph {
       if (this.adjMatrix[u][v] != 0 && desc[v] == 0)
         dfsRecAux(v, desc, R);// walking next node
     }
+  }
+
+  public void floydWarshall() {
+    int[][] dist = new int[this.countNodes][this.countNodes];
+    int[][] pred = new int[this.countNodes][this.countNodes];
+
+    for (int i = 0; i < this.countNodes; i++) {
+      for (int j = 0; j < this.countNodes; j++) {
+        if (i == j) {
+          dist[i][j] = 0;
+        } else if (this.adjMatrix[i][j] != 0) {
+          dist[i][j] = this.adjMatrix[i][j];
+          pred[i][j] = i;
+        } else {
+          dist[i][j] = 99999;
+          pred[i][j] = -1;
+        }
+      }
+    }
+
+    for (int k = 0; k < this.countNodes; k++) {
+      for (int i = 0; i < this.countNodes; i++) {
+        for (int j = 0; j < this.countNodes; j++) {
+          if (dist[i][j] > dist[i][k] + dist[k][j]) {
+            dist[i][j] = dist[i][k] + dist[k][j];
+            pred[i][j] = pred[k][j];
+          }
+        }
+      }
+    }
+
+    for (int i = 0; i < dist.length - 1; i++) {
+      for (int j = 0; j < dist[i].length - 1; j++) {
+        System.out.print(dist[i][j] + " ");
+      }
+      System.out.println(" ");
+    }
+    System.out.println("  ");
+
+    for (int i = 0; i < pred.length - 1; i++) {
+      for (int j = 0; j < pred[i].length - 1; j++) {
+        System.out.print(pred[i][j] + " ");
+      }
+      System.out.println(" ");
+    }
+
   }
 
   public String toString() {
